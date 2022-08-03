@@ -2,15 +2,18 @@ import { useState } from "react";
 import { Button } from "react-bootstrap";
 import { Form, Row, Col } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
+import { useFetchDocuments } from "../hooks/useFetchDocuments";
 
 export const Home = () => {
   const [fieldSearch, setFieldSearch] = useState("");
 
-  const [posts] = useState([]);
+  const { documents: posts, loading } = useFetchDocuments("posts");
 
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+
+  console.log(posts);
 
   return (
     <div className="d-flex justify-content-center align-items-center gap-3 flex-column mt-4 p-3 ">
@@ -34,17 +37,30 @@ export const Home = () => {
         </Row>
       </Form>
 
-      {posts.length === 0 && (
-        <div className="d-flex flex-column gap-2 mt-4">
-          <p>Não foram encontrados posts</p>
-          <NavLink
-            to="/posts/create"
-            className="text-decoration-none text-white btn btn-dark px-5"
-          >
-            Criar primeiro post
-          </NavLink>
-        </div>
-      )}
+      <div className="d-flex justify-content-center w-75 gap-5 mt-4">
+        {posts &&
+          posts.map((post) => {
+            return (
+              <div className="d-flex flex-column w-25 card p-3 pe-auto">
+                <h2 className="h-25">{post.title}</h2>
+                <img src={post.image} className="h-50"></img>
+                <p>{post.body}</p>
+              </div>
+            );
+          })}
+
+        {!posts && (
+          <div className="d-flex flex-column gap-2 mt-4">
+            <p>Não foram encontrados posts</p>
+            <NavLink
+              to="/posts/create"
+              className="text-decoration-none text-white btn btn-dark px-5"
+            >
+              Criar primeiro post
+            </NavLink>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
