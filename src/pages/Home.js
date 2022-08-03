@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Badge, Button } from "react-bootstrap";
 import { Form, Row, Col } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { useFetchDocuments } from "../hooks/useFetchDocuments";
@@ -43,8 +43,21 @@ export const Home = () => {
             return (
               <div className="d-flex flex-column w-25 card p-3 pe-auto">
                 <h2 className="h-25">{post.title}</h2>
-                <img src={post.image} className="h-50"></img>
+                <img
+                  src={post.image}
+                  alt="imagem do post"
+                  className="h-50"
+                ></img>
                 <p>{post.body}</p>
+                <div className="d-flex gap-2">
+                  {post.tags.map((tag) => {
+                    return (
+                      <Badge pill className="p-2" bg="dark">
+                        {tag}
+                      </Badge>
+                    );
+                  })}
+                </div>
               </div>
             );
           })}

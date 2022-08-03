@@ -23,7 +23,9 @@ export const CreatePost = () => {
     e.preventDefault();
     setError("");
 
-    const tagsArray = fields.tags;
+    const tagsArray = fields.tags
+      .split(",")
+      .map((tag) => tag.trim().toLowerCase());
 
     if (!fields.titulo || !fields.imagem || !fields.conteudo || !fields.tags) {
       setError("Por Favor, preencha todos os dados");
