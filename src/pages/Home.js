@@ -43,13 +43,9 @@ export const Home = () => {
             return (
               <div className="d-flex flex-column w-25 card p-3 pe-auto">
                 <h2 className="h-25">{post.title}</h2>
-                <img
-                  src={post.image}
-                  alt="imagem do post"
-                  className="h-50"
-                ></img>
+                <img src={post.image} alt="imagem do post" className="mh-25" />
                 <p>{post.body}</p>
-                <div className="d-flex gap-2">
+                <div className="d-flex gap-2 flex-wrap">
                   {post.tags.map((tag) => {
                     return (
                       <Badge pill className="p-2" bg="dark">
