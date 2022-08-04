@@ -8,20 +8,15 @@ import {
   where,
 } from "firebase/firestore";
 
-export const useFetchDocuments = (docCollection, search = null, uid = null) => {
+export const useFetchDocuments = (docCollection, search, uid = null) => {
   const [documents, setDocuments] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
 
   // deal with memory leak
-  const [cancelled, setCancelled] = useState(false);
 
   useEffect(() => {
     async function loadData() {
-      if (cancelled) {
-        return;
-      }
-
       setLoading(true);
 
       const collectionRef = await collection(db, docCollection);
@@ -62,13 +57,7 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
     }
 
     loadData();
-  }, [docCollection, search, uid, cancelled]);
-
-  console.log(documents);
-
-  useEffect(() => {
-    return () => setCancelled(true);
-  }, []);
+  }, [docCollection, search, uid]);
 
   return { documents, loading, error };
 };

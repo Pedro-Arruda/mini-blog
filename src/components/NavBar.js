@@ -37,13 +37,8 @@ export const NavBar = () => {
               {user && (
                 <>
                   <li className="nav-item">
-                    <NavLink to="/posts/create" className="nav-link">
-                      Criar post
-                    </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink to="/dashboard" className="nav-link">
-                      Dashboard
+                    <NavLink to="/usuario" className="nav-link">
+                      Usuário
                     </NavLink>
                   </li>
                 </>

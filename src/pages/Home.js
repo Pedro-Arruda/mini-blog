@@ -2,18 +2,19 @@ import { useState } from "react";
 import { Badge, Button } from "react-bootstrap";
 import { Form, Row, Col } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
+import { CardPost } from "../components/CardPost";
 import { useFetchDocuments } from "../hooks/useFetchDocuments";
 
 export const Home = () => {
   const [fieldSearch, setFieldSearch] = useState("");
+  const [valueSearch, setValueSearch] = useState("");
 
-  const { documents: posts, loading } = useFetchDocuments("posts");
+  const { documents: posts, loading } = useFetchDocuments("posts", valueSearch);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setValueSearch(fieldSearch);
   };
-
-  console.log(posts);
 
   return (
     <div className="d-flex justify-content-center align-items-center gap-3 flex-column mt-4 p-3 ">
@@ -37,24 +38,18 @@ export const Home = () => {
         </Row>
       </Form>
 
-      <div className="d-flex justify-content-center w-75 gap-5 mt-4">
+      <div className="d-flex gap-5 mt-5 flex-wrap justify-content-center">
         {posts &&
-          posts.map((post) => {
+          posts.map((post, index) => {
             return (
-              <div className="d-flex flex-column w-25 card p-3 pe-auto">
-                <h2 className="h-25">{post.title}</h2>
-                <img src={post.image} alt="imagem do post" className="mh-25" />
-                <p>{post.body}</p>
-                <div className="d-flex gap-2 flex-wrap">
-                  {post.tags.map((tag) => {
-                    return (
-                      <Badge pill className="p-2" bg="dark">
-                        {tag}
-                      </Badge>
-                    );
-                  })}
-                </div>
-              </div>
+              <CardPost
+                key={index}
+                body={post.body}
+                title={post.title}
+                createdBy={post.createdBy}
+                image={post.image}
+                tags={post.tags}
+              />
             );
           })}
 

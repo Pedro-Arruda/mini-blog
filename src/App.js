@@ -13,6 +13,7 @@ import { useAuth } from "./hooks/useAuth";
 import { useEffect, useState } from "react";
 import { CreatePost } from "./pages/CreatePost";
 import { Dashboard } from "./pages/Dashboard";
+import { Usuario } from "./pages/Usuario";
 
 function App() {
   const [user, setUser] = useState();
@@ -52,8 +53,8 @@ function App() {
                 element={user ? <CreatePost /> : <Navigate to="/login" />}
               ></Route>
               <Route
-                path="/dashboard"
-                element={user ? <Dashboard /> : <Navigate to="/login" />}
+                path="/usuario"
+                element={user ? <Usuario /> : <Navigate to="/login" />}
               ></Route>
             </Routes>
           </div>
