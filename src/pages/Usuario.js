@@ -16,7 +16,7 @@ export const Usuario = () => {
 
   return (
     <>
-      <div className="d-flex p-5 align-items-center justify-content-between">
+      <div className="d-flex py-5 align-items-center justify-content-between">
         <div className="d-flex flex-column">
           <h1>{auth.currentUser.displayName}</h1>
           <p className="w-75">
@@ -65,16 +65,18 @@ export const Usuario = () => {
       <div className="d-flex flex-wrap gap-5 justify-content-center">
         {posts &&
           posts.map((post, index) => {
-            return (
-              <CardPost
-                key={index}
-                body={post.body}
-                title={post.title}
-                createdBy={post.createdBy}
-                image={post.image}
-                tags={post.tags}
-              />
-            );
+            if (post.createdBy === auth.currentUser.displayName) {
+              return (
+                <CardPost
+                  key={index}
+                  body={post.body}
+                  title={post.title}
+                  createdBy={post.createdBy}
+                  image={post.image}
+                  tags={post.tags}
+                />
+              );
+            }
           })}
       </div>
     </>
