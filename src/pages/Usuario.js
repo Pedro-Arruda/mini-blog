@@ -6,13 +6,14 @@ import { BsFillPencilFill } from "react-icons/bs";
 import { useState } from "react";
 import { useAuthValue } from "../context/AuthContext";
 import { useAuth } from "../hooks/useAuth";
+import { useDeleteDocument } from "../hooks/useDeleteDocuments";
 
 export const Usuario = () => {
   const { auth } = useAuth();
   const { documents: posts, loading } = useFetchDocuments("posts");
-  const [isEditable, setIsEditable] = useState(false);
+  const [isEditableImageProfile, setIsEditableImageProfile] = useState(false);
 
-  console.log(auth.currentUser.displayName);
+  const { deleteDocument } = useDeleteDocument("posts");
 
   return (
     <>
@@ -29,8 +30,8 @@ export const Usuario = () => {
 
         <label
           className="outline-light d-flex flex-column align-items-center justify-content-center position-relative pe-auto"
-          onMouseEnter={() => setIsEditable(true)}
-          onMouseLeave={() => setIsEditable(false)}
+          onMouseEnter={() => setIsEditableImageProfile(true)}
+          onMouseLeave={() => setIsEditableImageProfile(false)}
           htmlFor="input-img"
           style={{ cursor: "pointer" }}
         >
@@ -38,15 +39,16 @@ export const Usuario = () => {
             src="https://source.unsplash.com/random/10×10"
             width={150}
             height={150}
-            className={["rounded-circle", isEditable ? "opacity-50" : ""].join(
-              " "
-            )}
+            className={[
+              "rounded-circle",
+              isEditableImageProfile ? "opacity-50" : "",
+            ].join(" ")}
             alt="img do usuario"
           />
           <BsFillPencilFill
             className={[
               "position-absolute",
-              isEditable ? "opacity-100" : "opacity-0",
+              isEditableImageProfile ? "opacity-100" : "opacity-0",
             ].join(" ")}
             size={30}
             color="#fff"
@@ -57,7 +59,7 @@ export const Usuario = () => {
       <div className="d-flex justify-content-between py-5">
         <h1>Últimos Posts</h1>
         <NavLink to={"/posts/create"}>
-          <Button variant="dark" className="px-4">
+          <Button variant="dark" className="px-5">
             Novo Post
           </Button>
         </NavLink>
@@ -66,16 +68,7 @@ export const Usuario = () => {
         {posts &&
           posts.map((post, index) => {
             if (post.createdBy === auth.currentUser.displayName) {
-              return (
-                <CardPost
-                  key={index}
-                  body={post.body}
-                  title={post.title}
-                  createdBy={post.createdBy}
-                  image={post.image}
-                  tags={post.tags}
-                />
-              );
+              return <CardPost isEditable={true} key={index} post={post} />;
             }
           })}
       </div>

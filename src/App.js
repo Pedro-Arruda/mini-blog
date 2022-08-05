@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { CreatePost } from "./pages/CreatePost";
 import { Dashboard } from "./pages/Dashboard";
 import { Usuario } from "./pages/Usuario";
+import { EditPost } from "./pages/EditPost";
 
 function App() {
   const [user, setUser] = useState();
@@ -51,6 +52,10 @@ function App() {
               <Route
                 path="/posts/create"
                 element={user ? <CreatePost /> : <Navigate to="/login" />}
+              ></Route>
+              <Route
+                path="/posts/:id/edit"
+                element={user ? <EditPost /> : <Navigate to="/login" />}
               ></Route>
               <Route
                 path="/usuario"

@@ -1,29 +1,46 @@
-import { Badge, Button } from "react-bootstrap";
+import { useState } from "react";
+import { Badge, Button, Modal } from "react-bootstrap";
+import { Link, NavLink } from "react-router-dom";
+import { BsFillPencilFill, BsTrash } from "react-icons/bs";
+import { useDeleteDocument } from "../hooks/useDeleteDocuments";
+
 import { makePostResume } from "../functions/makePostResume";
 
-export const CardPost = ({
-  image,
-  title,
-  body,
-  tags,
-  createdBy,
-  isEditable,
-}) => {
+export const CardPost = ({ post, isEditable }) => {
+  const { deleteDocument } = useDeleteDocument("posts");
+  const [hover, setHover] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
   return (
-    <button className="border-0 bg-transparent h-100">
-      <div className="card" style={{ width: "20rem", height: "40rem" }}>
+    <button
+      className="border-0 bg-transparent h-100"
+      onMouseLeave={() => {
+        setHover(false);
+      }}
+      onMouseEnter={() => {
+        setHover(true);
+      }}
+    >
+      <div
+        className={[
+          "card position-relative d-flex flex-column justify-content-center",
+          hover & isEditable ? "opacity-25 bg-dark" : "",
+        ].join(" ")}
+        style={{ width: "22rem", height: "40rem" }}
+      >
         <img
-          src={image}
+          src={post.image}
           alt="imagem do post"
+          width={"100%"}
           className="card-img-top"
-          style={{ height: 14 + "rem" }}
+          style={{ height: "14rem" }}
         />
 
         <div className="card-body">
-          <h2 className="card-title">{title}</h2>
-          <p className="card-text">{makePostResume(body, 330)}</p>
+          <h2 className="card-title">{post.title}</h2>
+          <p className="card-text">{makePostResume(post.body, 330)}</p>
           <div className="d-flex gap-2 flex-wrap">
-            {tags.map((tag, index) => {
+            {post.tags.map((tag, index) => {
               return (
                 <Badge pill className="p-2" bg="dark" key={index}>
                   {tag}
@@ -32,7 +49,43 @@ export const CardPost = ({
             })}
           </div>
 
-          <p className=" mt-3">{createdBy}</p>
+          <p className=" mt-3">{post.createdBy}</p>
+        </div>
+
+        <div
+          className={[
+            "position-absolute d-flex gap-5 justify-content-center w-100 ",
+            hover & isEditable ? "opacity-100" : "opacity-0",
+          ].join(" ")}
+          size={45}
+          style={{ zIndex: 10 }}
+        >
+          <Link to={`/posts/${post.id}/edit`}>
+            <BsFillPencilFill size={45} color={"#fff"} />
+          </Link>
+          <BsTrash
+            size={45}
+            color={"#fff"}
+            onClick={() => {
+              setShowModal();
+            }}
+            // onClick={() => {
+            //   deleteDocument(post.id);
+            // }}
+          />
+
+          <Modal show={showModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Modal heading</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Woohoo, you're reading this text in a modal!
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary">Close</Button>
+              <Button variant="primary">Save Changes</Button>
+            </Modal.Footer>
+          </Modal>
         </div>
       </div>
     </button>

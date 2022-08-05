@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Form, Button, NavLink } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import { useInsertDocument } from "../hooks/useInsetDocuments";
 import { useAuthValue } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { Toast, Spinner } from "react-bootstrap";
+import { useParams } from "react-router";
 
-export const CreatePost = () => {
+export const EditPost = () => {
   const [fields, setFields] = useState({
     titulo: "",
     imagem: "",
@@ -13,26 +14,24 @@ export const CreatePost = () => {
     tags: [],
   });
 
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+  const params = useParams();
 
   const { user } = useAuthValue();
   const { insertDocument, response } = useInsertDocument("posts");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!fields.titulo || !fields.imagem || !fields.conteudo || !fields.tags) {
-      setError("Por Favor, preencha todos os dados");
-      console.log(error);
-      return;
-    }
+    setError("");
 
     const tagsArray = fields.tags
       .split(",")
       .map((tag) => tag.trim().toLowerCase());
 
-    console.log("oi");
+    if (!fields.titulo || !fields.imagem || !fields.conteudo || !fields.tags) {
+      setError("Por Favor, preencha todos os dados");
+    }
     insertDocument({
       title: fields.titulo,
       image: fields.imagem,
@@ -41,13 +40,14 @@ export const CreatePost = () => {
       uid: user.uid,
       createdBy: user.displayName,
     });
-    console.log("oaaai");
 
-    navigate("/");
+    if (error !== "") return;
+
+    navigate("/usuario");
   };
   return (
     <div className="mt-4 p-3">
-      <h1>Criar Post</h1>
+      <h1>Editar Post</h1>
       <p>Escreva sobre o que quiser e compartilhe seu conhecimento!</p>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mt-4">
@@ -117,24 +117,22 @@ export const CreatePost = () => {
         <div className="d-flex justify-content-end gap-4">
           {!response.loading && (
             <>
-              <Link to={"/usuario"}>
+              <Link to="/usuario">
                 <Button className="mt-4 px-5" variant="outline-danger">
                   Cancelar
                 </Button>
               </Link>
               <Button type="submit" className="mt-4 px-5">
-                Cadastrar
+                Editar
               </Button>
             </>
           )}
 
           {response.loading && (
-            <>
-              <Button type="submit" disabled className="mt-4 px-5 px-4">
-                <Spinner animation="border" size="sm" role="status" />
-                <span className="p-2">Criando Post...</span>
-              </Button>
-            </>
+            <Button type="submit" disabled className="mt-4 px-5 px-4">
+              <Spinner animation="border" size="sm" role="status" />
+              <span className="p-2">Editando Post...</span>
+            </Button>
           )}
         </div>
       </Form>

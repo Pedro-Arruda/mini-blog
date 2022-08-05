@@ -39,7 +39,6 @@ export const Register = () => {
     }
   }, [AuthError]);
 
-  console.log(isLoading);
   return (
     <div className="p-5">
       <h1>Cadastre-se para postar</h1>

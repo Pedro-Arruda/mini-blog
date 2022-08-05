@@ -41,16 +41,7 @@ export const Home = () => {
       <div className="d-flex gap-5 mt-5 flex-wrap justify-content-center">
         {posts &&
           posts.map((post, index) => {
-            return (
-              <CardPost
-                key={index}
-                body={post.body}
-                title={post.title}
-                createdBy={post.createdBy}
-                image={post.image}
-                tags={post.tags}
-              />
-            );
+            return <CardPost isEditable={false} key={index} post={post} />;
           })}
 
         {!posts && (
