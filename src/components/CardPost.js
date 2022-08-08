@@ -26,14 +26,13 @@ export const CardPost = ({ post, isEditable }) => {
           "card position-relative d-flex flex-column justify-content-center",
           hover & isEditable ? "opacity-25 bg-dark" : "",
         ].join(" ")}
-        style={{ width: "22rem", height: "40rem" }}
+        style={{ width: "23rem", height: "40rem" }}
       >
         <img
           src={post.image}
           alt="imagem do post"
-          width={"100%"}
           className="card-img-top"
-          style={{ height: "14rem" }}
+          style={{ height: "17rem" }}
         />
 
         <div className="card-body">

@@ -7,6 +7,7 @@ export const Register = () => {
   const [fields, setFields] = useState({
     nome: "",
     email: "",
+    image: "",
     senha: "",
     repetirSenha: "",
   });
@@ -23,6 +24,7 @@ export const Register = () => {
       nome: fields.nome,
       email: fields.email,
       password: fields.senha,
+      image: fields.image,
     };
 
     if (fields.senha !== fields.repetirSenha) {
@@ -67,6 +69,17 @@ export const Register = () => {
             onChange={(e) => setFields({ ...fields, email: e.target.value })}
           />
         </Form.Group>
+        <Form.Group className="mt-4">
+          <Form.Label>
+            <strong>Imagem de Perfil</strong>
+          </Form.Label>
+          <Form.Control
+            className="input"
+            value={fields.image}
+            onChange={(e) => setFields({ ...fields, image: e.target.value })}
+          />
+        </Form.Group>
+
         <Form.Group className="mt-4">
           <Form.Label>
             <strong>Senha</strong>

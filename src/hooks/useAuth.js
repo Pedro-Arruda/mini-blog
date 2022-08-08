@@ -36,6 +36,7 @@ export const useAuth = () => {
 
       await updateProfile(user, {
         displayName: data.nome,
+        photoURL: "aaaa",
       });
 
       return user;
