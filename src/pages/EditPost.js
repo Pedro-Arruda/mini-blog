@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { useInsertDocument } from "../hooks/useInsetDocuments";
+import { useUpdateDocument } from "../hooks/useUpdateDocuments";
 import { useAuthValue } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { Toast, Spinner } from "react-bootstrap";
@@ -19,27 +19,31 @@ export const EditPost = () => {
   const params = useParams();
 
   const { user } = useAuthValue();
-  const { insertDocument, response } = useInsertDocument("posts");
+  const { updateDocument, response } = useUpdateDocument("posts");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
 
+    if (!fields.titulo || !fields.imagem || !fields.conteudo || !fields.tags) {
+      setError("Por Favor, preencha todos os dados");
+      console.log(error);
+      return;
+    }
     const tagsArray = fields.tags
       .split(",")
       .map((tag) => tag.trim().toLowerCase());
 
-    if (!fields.titulo || !fields.imagem || !fields.conteudo || !fields.tags) {
-      setError("Por Favor, preencha todos os dados");
-    }
-    insertDocument({
+    const data = {
       title: fields.titulo,
       image: fields.imagem,
       body: fields.conteudo,
       tags: tagsArray,
       uid: user.uid,
       createdBy: user.displayName,
-    });
+    };
+
+    updateDocument(params.id, data);
 
     if (error !== "") return;
 

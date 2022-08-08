@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Button, NavLink } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import { useInsertDocument } from "../hooks/useInsetDocuments";
 import { useAuthValue } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -32,7 +32,6 @@ export const CreatePost = () => {
       .split(",")
       .map((tag) => tag.trim().toLowerCase());
 
-    console.log("oi");
     insertDocument({
       title: fields.titulo,
       image: fields.imagem,

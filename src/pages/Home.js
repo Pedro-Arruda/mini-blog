@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Badge, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { Form, Row, Col } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { CardPost } from "../components/CardPost";

@@ -4,10 +4,8 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
   signOut,
-  AuthErrorCodes,
 } from "firebase/auth";
 
-import { db } from "../firebase/config";
 import { useEffect, useState } from "react";
 
 export const useAuth = () => {

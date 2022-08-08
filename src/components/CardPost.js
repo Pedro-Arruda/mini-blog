@@ -67,23 +67,32 @@ export const CardPost = ({ post, isEditable }) => {
             size={45}
             color={"#fff"}
             onClick={() => {
-              setShowModal();
+              setShowModal(true);
             }}
-            // onClick={() => {
-            //   deleteDocument(post.id);
-            // }}
           />
 
           <Modal show={showModal}>
-            <Modal.Header closeButton>
-              <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Header>
+              <Modal.Title>Atenção!</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-              Woohoo, you're reading this text in a modal!
-            </Modal.Body>
+            <Modal.Body>Tem certeza que deseja excluir o post?</Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary">Close</Button>
-              <Button variant="primary">Save Changes</Button>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  setShowModal(false);
+                }}
+              >
+                Voltar
+              </Button>
+              <Button
+                variant="outline-danger"
+                onClick={() => {
+                  deleteDocument(post.id);
+                }}
+              >
+                Excluir Post
+              </Button>
             </Modal.Footer>
           </Modal>
         </div>

@@ -4,7 +4,6 @@ import { CardPost } from "../components/CardPost";
 import { useFetchDocuments } from "../hooks/useFetchDocuments";
 import { BsFillPencilFill } from "react-icons/bs";
 import { useState } from "react";
-import { useAuthValue } from "../context/AuthContext";
 import { useAuth } from "../hooks/useAuth";
 import { useDeleteDocument } from "../hooks/useDeleteDocuments";
 
@@ -12,8 +11,6 @@ export const Usuario = () => {
   const { auth } = useAuth();
   const { documents: posts, loading } = useFetchDocuments("posts");
   const [isEditableImageProfile, setIsEditableImageProfile] = useState(false);
-
-  const { deleteDocument } = useDeleteDocument("posts");
 
   return (
     <>
